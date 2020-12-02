@@ -19,5 +19,5 @@ def parttwo():
                 if int(a) + int(b) + int(c) == 2020:
                     print(int(a)*int(b)*int(c))
                     return
-partone()
+#partone()
 parttwo()
