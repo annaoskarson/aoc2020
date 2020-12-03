@@ -9,7 +9,7 @@ with open('aoc2020-03-input.txt', 'r') as f:
 def partone(x, y):
     trees = 0
     i = 0
-    while i < len(lines) and (i*y) <= len(lines):
+    while (i*y) < len(lines):
         xpos = (i*x)
         ypos = (i*y)
         line = lines[ypos]
