@@ -10,8 +10,7 @@ def partone(x, y):
     trees = 0
     i = 0
     while (i*y) < len(lines):
-        ypos = (i*y)
-        line = lines[ypos]
+        line = lines[i*y]
         xpos = (i*x) % len(line)
         if line[xpos] == '#':
             trees +=1
