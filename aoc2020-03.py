@@ -12,9 +12,6 @@ def partone(x, y):
     while i < len(lines) and (i*y) <= len(lines):
         xpos = (i*x)
         ypos = (i*y)
-        #if ypos > len(lines):
-        #    return(trees)
-        #else:
         line = lines[ypos]
         if xpos >= len(line):
             xpos = xpos % len(line)
