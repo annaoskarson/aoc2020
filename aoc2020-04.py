@@ -1,105 +1,66 @@
 #!/usr/bin/python3
+import re
 
 with open('aoc2020-04-input.txt', 'r') as f:
-    lines = f.read().split('\n')
+    lines = f.read().split('\n\n')
 
-listan = []
+passports = []
+for line in lines:
+    passport = re.split(r' +|\n+',line.strip())
+    passports = passports + [passport]
 
-for l in lines:
-    a = l.split(' ')
-    listan = listan + a
+valid = [False] * 7
+checks = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 
-byr = False
-iyr = False
-eyr = False
-hgt = False
-hcl = False
-ecl = False
-pid = False
-valid = 0
-i = 0
-while i < len(listan):
-    if listan[i] == '':
-        if byr and iyr and eyr and hgt and hcl and ecl and pid:
-            valid +=1
-        byr = False
-        iyr = False
-        eyr = False
-        hgt = False
-        hcl = False
-        ecl = False
-        pid = False
-    else:
-        pre = listan[i].split(':')[0]
-        if pre == 'byr':
-            byr = True
-        if pre == 'iyr':
-            iyr = True
-        if pre == 'eyr':
-            eyr = True
-        if pre == 'hgt':
-            hgt = True
-        if pre == 'hcl':
-            hcl = True
-        if pre == 'ecl':
-            ecl = True
-        if pre == 'pid':
-            pid = True
-    #print(byr, iyr, eyr, hgt, hcl, ecl, pid)
-    i += 1
+def partone(passports):
+    global valid, checks
+    vpassports = []
+    for p in passports:
+        for post in p:
+            try:
+                valid[checks.index(post[:3])] = True
+            except ValueError:
+                pass
+        if all(valid):
+            vpassports = vpassports + [p]
+        valid = [False] * 7
+    return(vpassports)
 
-print(valid)
-print('part 2')
+def test(field, value):
+    global valid
+    if field == 'byr' and len(value) == 4 and int(value) >= 1920 and int(value) <= 2002:
+        valid[checks.index(field)] = True
+    elif field == 'iyr' and len(value) == 4 and int(value) >= 2010 and int(value) <= 2020:
+        valid[checks.index(field)] = True
+    elif field == 'eyr' and len(value) == 4 and int(value) >= 2020 and int(value) <= 2030:
+        valid[checks.index(field)] = True
+    elif field == 'hgt' and ((value[-2:] == 'cm' and int(value[:-2]) >= 150 and int(value[:-2]) <= 193) or ((value[-2:] == 'in' and int(value[:-2]) >= 59 and int(value[:-2]) <= 76))):
+        valid[checks.index(field)] = True
+    elif field =='hcl' and re.match(r'[a-f\d]{6}', value[1:]):
+        valid[checks.index(field)] = True
+    elif field == 'ecl' and value in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
+        valid[checks.index(field)] = True
+    elif field == 'pid' and len(value) == 9 and re.match(r'\d{9}', value):
+        valid[checks.index(field)] = True
 
-byr = False
-iyr = False
-eyr = False
-hgt = False
-hcl = False
-ecl = False
-pid = False
-valid = 0
-i = 0
-while i < len(listan):
-    if listan[i] == '':
-        if byr and iyr and eyr and hgt and hcl and ecl and pid:
-            valid +=1
-        byr = False
-        iyr = False
-        eyr = False
-        hgt = False
-        hcl = False
-        ecl = False
-        pid = False
-    else:
-        [pre, post] = listan[i].split(':')
-        #print(pre)
-        #print(post)
-        if pre == 'byr':
-            if len(post) == 4 and int(post) >= 1920 and int(post) <= 2002:
-                byr = True
-        if pre == 'iyr':
-            if len(post) == 4 and int(post) >= 2010 and int(post) <= 2020:
-                iyr = True
-        if pre == 'eyr':
-            if len(post) == 4 and int(post) >= 2020 and int(post) <= 2030:
-                eyr = True
-        if pre == 'hgt':
-            if (post[-2:] == 'cm' and int(post[:-2]) >= 150 and int(post[:-2]) <= 193) or (post[-2:] == 'in' and int(post[:-2]) >= 59 and int(post[:-2]) <= 76):
-                hgt = True
-        if pre == 'hcl':
-            if post[0] == '#' and len(post) == 7 and (post[1:].isnumeric() or s in ['a', 'b', 'c', 'd', 'e', 'f'] for s in post[1:]):
-                hcl = True
-        if pre == 'ecl':
-            if post in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
-                ecl = True
-        if pre == 'pid':
-            if len(post) == 9 and post.isnumeric():
-                pid = True
-    #print(byr, iyr, eyr, hgt, hcl, ecl, pid)
-    i += 1
-print(valid)
+def parttwo(vpassports):
+    global valid
+    wpassports = []
+    for p in vpassports:
+        #print('p: ', p)
+        for post in p:
+            [field,value] = post.split(':')
+            test(field,value)
+        if all(valid):
+            #print(valid, p)
+            wpassports = wpassports + [p]
+        else:
+            pass
+            #print(valid, p)
+        valid = [False] * 7
+    return(wpassports)
+
 print('Advent of Code 2020, day 4 part 1')
-#print(str(partone(3,1)) + ' is the number of trees.')
+print(len(partone(passports)))
 print('Advent of Code 2020, day 4 part 2')
-#print(str(parttwo()) + ' is the number.')
+print(len(parttwo(partone(passports))))
