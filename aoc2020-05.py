@@ -8,13 +8,10 @@ with open('aoc2020-05-input.txt', 'r') as f:
 
 IDs = []
 for s in seats:
-    row = int(s[:7].replace('F', '0').replace('B', '1'), base=2)
-    col = int(s[-3:].replace('L', '0').replace('R', '1'), base=2)
-    IDs = IDs + [row*8+col]
-
-IDs.sort()
+    IDs = IDs + [int(s.replace('F', '0').replace('B', '1').replace('L', '0').replace('R', '1'), base=2)]
 
 def missing(IDs):
+    IDs.sort()
     for (i , id) in enumerate(IDs[:-1]):
         if (id + 2) == IDs[i+1]:
             return(id+1)
