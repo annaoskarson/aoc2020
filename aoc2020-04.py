@@ -6,61 +6,47 @@ with open('aoc2020-04-input.txt', 'r') as f:
 
 passports = []
 for line in lines:
-    passport = re.split(r' +|\n+',line.strip())
-    passports = passports + [passport]
+    passports.append(re.split(r' +|\n+',line.strip()))
 
 valid = [False] * 7
 checks = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
 
+vpassports = []
 def partone(passports):
-    global valid, checks
-    vpassports = []
+    global valid, checks, vpassports
     for p in passports:
         for post in p:
-            try:
+            if re.match(r'^(byr|iyr|eyr|hgt|hcl|ecl|pid):', post):
                 valid[checks.index(post[:3])] = True
-            except ValueError:
-                pass
         if all(valid):
-            vpassports = vpassports + [p]
+            vpassports.append(p)
         valid = [False] * 7
     return(vpassports)
 
-def test(field, value):
+def test(p):
+    global checks
     global valid
-    if field == 'byr' and len(value) == 4 and int(value) >= 1920 and int(value) <= 2002:
-        valid[checks.index(field)] = True
-    elif field == 'iyr' and len(value) == 4 and int(value) >= 2010 and int(value) <= 2020:
-        valid[checks.index(field)] = True
-    elif field == 'eyr' and len(value) == 4 and int(value) >= 2020 and int(value) <= 2030:
-        valid[checks.index(field)] = True
-    elif field == 'hgt' and ((value[-2:] == 'cm' and int(value[:-2]) >= 150 and int(value[:-2]) <= 193) or ((value[-2:] == 'in' and int(value[:-2]) >= 59 and int(value[:-2]) <= 76))):
-        valid[checks.index(field)] = True
-    elif field =='hcl' and re.match(r'[a-f\d]{6}', value[1:]):
-        valid[checks.index(field)] = True
-    elif field == 'ecl' and value in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
-        valid[checks.index(field)] = True
-    elif field == 'pid' and re.match(r'^\d{9}$', value):
-        valid[checks.index(field)] = True
+    if (re.match(r'byr:(19[2-9][0-9]|200[0-2])$', p) or
+    re.match(r'iyr:20(1[0-9]|20)$', p) or
+    re.match(r'eyr:20(2[0-9]|30)$',p) or
+    re.match(r'hgt:(1([5-8][0-9]|9[0-3])cm|(59|6[0-9]|7[0-6])in)$', p) or
+    re.match(r'hcl:#[a-f\d]{6}$', p) or
+    re.match(r'ecl:(amb|blu|brn|gry|grn|hzl|oth)$', p) or
+    re.match(r'pid:\d{9}$', p)):
+        valid[checks.index(p[:3])] = True
 
-def parttwo(vpassports):
+def parttwo(passports):
     global valid
-    wpassports = []
-    for p in vpassports:
-        #print('p: ', p)
+    vpassports = []
+    for p in passports:
         for post in p:
-            [field,value] = post.split(':')
-            test(field,value)
+            test(post)
         if all(valid):
-            #print(valid, p)
-            wpassports = wpassports + [p]
-        else:
-            pass
-            #print(valid, p)
+            vpassports.append(p)
         valid = [False] * 7
-    return(wpassports)
+    return(vpassports)
 
 print('Advent of Code 2020, day 4 part 1')
 print(len(partone(passports)))
 print('Advent of Code 2020, day 4 part 2')
-print(len(parttwo(partone(passports))))
+print(len(parttwo(vpassports)))
