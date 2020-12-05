@@ -8,7 +8,7 @@ with open('aoc2020-05-input.txt', 'r') as f:
 
 IDs = []
 for s in seats:
-    IDs = IDs + [int(s.replace('F', '0').replace('B', '1').replace('L', '0').replace('R', '1'), base=2)]
+    IDs.append(int(s.replace('F', '0').replace('B', '1').replace('L', '0').replace('R', '1'), base=2))
 
 def missing(IDs):
     for (i , id) in enumerate(IDs[:-1]):

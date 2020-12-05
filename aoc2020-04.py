@@ -10,8 +10,8 @@ for line in lines:
 
 valid = [False] * 7
 checks = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-
 vpassports = []
+
 def partone(passports):
     global valid, checks, vpassports
     for p in passports:
