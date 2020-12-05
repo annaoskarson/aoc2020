@@ -40,7 +40,7 @@ def test(field, value):
         valid[checks.index(field)] = True
     elif field == 'ecl' and value in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
         valid[checks.index(field)] = True
-    elif field == 'pid' and len(value) == 9 and re.match(r'\d{9}', value):
+    elif field == 'pid' and re.match(r'^\d{9}$', value):
         valid[checks.index(field)] = True
 
 def parttwo(vpassports):
