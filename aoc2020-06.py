@@ -2,11 +2,11 @@
 import re
 
 with open('aoc2020-06-input.txt', 'r') as f:
-    lines = f.read().strip().split('\n\n')
+    groups = f.read().strip().split('\n\n')
 
 answers = []
-for l in lines:
-    answers.append(l.split('\n'))
+for p in groups:
+    answers.append(p.split('\n'))
 
 #answers = [['abc'], ['a', 'b', 'c'], ['ab', 'ac'], ['a', 'a', 'a', 'a'], ['b']]
 
@@ -14,8 +14,7 @@ def partone(ans):
     count = 0
     for group in ans:
         grset = set(group[0])
-        for p in group:
-            grset.update(p)
+        [grset.update(p) for p in group]
         count += len(grset)
     return(count)
 
