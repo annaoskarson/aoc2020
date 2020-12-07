@@ -14,12 +14,11 @@ for t in text:
             bagage[bag].append(bagin)
 
 def inbag(q, bag):
-    if q in bagage[bag]:
-        return(True)
-    else:
-        for a in set(bagage[bag]):
-            if inbag(q, a):
-                return(True)
+    for a in set(bagage[bag]):
+        if a == q:
+            return(True)
+        if inbag(q, a):
+            return(True)
     return(False)
 
 def partone():
