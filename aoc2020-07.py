@@ -12,11 +12,10 @@ for t in text:
     for i in bagsin:
         [nbr, bagin] = i.strip().split(' ', 1)
         bagin = ' '.join(bagin.split(' ')[:2])
-        if nbr.isnumeric():
-            nbr = int(nbr)
-        elif nbr == 'no':
+        if nbr == 'no':
             nbr = 0
             bagin = ''
+        nbr = int(nbr)
         for n in range(nbr):
             bagage[bag].append(bagin)
 
