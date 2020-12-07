@@ -27,7 +27,7 @@ def parttwo(ans):
         count += len(grset)
     return(count)
 
-print('Advent of Code 2020, day 4 part 1')
+print('Advent of Code 2020, day 6 part 1')
 print(partone(answers))
-print('Advent of Code 2020, day 4 part 2')
+print('Advent of Code 2020, day 6 part 2')
 print(parttwo(answers))

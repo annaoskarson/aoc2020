@@ -49,7 +49,7 @@ def parttwo():
     number = countin(question)
     return(number)
 
-print('Advent of Code 2020, day 4 part 1')
+print('Advent of Code 2020, day 7 part 1')
 print(partone())
-print('Advent of Code 2020, day 4 part 2')
+print('Advent of Code 2020, day 7 part 2')
 print(parttwo())
