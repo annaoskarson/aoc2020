@@ -40,7 +40,7 @@ def inbag2(q, bag):
     for a in set(bagage[bag]):
         if q == a:
             return(True)
-        if inbag(q, a):
+        if inbag2(q, a):
             return(True)
     return(False)
 
