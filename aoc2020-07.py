@@ -23,10 +23,9 @@ def inbag(q, bag):
     return(False)
 
 def partone():
-    question = 'shiny gold'
     c = 0
     for b in bagage.keys():
-        if inbag(question, b):
+        if inbag('shiny gold', b):
             c += 1
     return(c)
 
@@ -37,8 +36,7 @@ def countin(bag):
     return(inside + len(bagage[bag]))
 
 def parttwo():
-    question = 'shiny gold'
-    number = countin(question)
+    number = countin('shiny gold')
     return(number)
 
 print('Advent of Code 2020, day 7 part 1')
