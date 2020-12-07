@@ -28,7 +28,7 @@ def printb():
 print(len(text), '=', len(bagage))
 
 def inbag(q, bag):
-    if q in set(bagage[bag]):
+    if q in bagage[bag]:
         return(True)
     else:
         for a in set(bagage[bag]):
@@ -39,17 +39,23 @@ def inbag(q, bag):
 def partone():
     question = 'shiny gold'
     c = 0
-    vb = []
     for b in bagage.keys():
         if inbag(question, b):
-            vb.append(b)
-    return(vb)
+            c += 1
+    return(c)
 
-bags = partone()
+def countin(bag):
+    inside = 0
+    for b in bagage[bag]:
+        inside += countin(b)
+    return(inside + len(bagage[bag]))
 
-
+def parttwo():
+    question = 'shiny gold'
+    number = countin(question)
+    return(number)
 
 print('Advent of Code 2020, day 4 part 1')
-print(len(bags))
-#print('Advent of Code 2020, day 4 part 2')
-#print(parttwo()) #16276 wrong
+print(partone())
+print('Advent of Code 2020, day 4 part 2')
+print(parttwo()) #16276 wrong
