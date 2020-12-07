@@ -36,6 +36,14 @@ def inbag(q, bag):
                 return(True)
     return(False)
 
+def inbag2(q, bag):
+    for a in set(bagage[bag]):
+        if q == a:
+            return(True)
+        if inbag(q, a):
+            return(True)
+    return(False)
+
 def partone():
     question = 'shiny gold'
     c = 0
