@@ -28,28 +28,28 @@ def printb():
 print(len(text), '=', len(bagage))
 
 def inbag(q, bag):
-    if bagage[bag] == []:
-        return(False)
-    elif q in set(bagage[bag]):
+    if q in set(bagage[bag]):
         return(True)
     else:
         for a in set(bagage[bag]):
-            if q in set(bagage[a]):
+            if inbag(q, a):
                 return(True)
-            else:
-                inbag(q, a)
+    return(False)
 
-question = 'shiny gold'
-c = 0
-vb = []
-for b in bagage.keys():
-    if inbag(question, b):
-        vb.append(b)
+def partone():
+    question = 'shiny gold'
+    c = 0
+    vb = []
+    for b in bagage.keys():
+        if inbag(question, b):
+            vb.append(b)
+    return(vb)
 
-#print('valid bags:', vb)
-#print(len(vb), len(set(vb)))
+bags = partone()
+
+
 
 print('Advent of Code 2020, day 4 part 1')
-print(len(vb)) #30 was wrong
+print(len(bags))
 #print('Advent of Code 2020, day 4 part 2')
-#print(parttwo(answers))
+#print(parttwo()) #16276 wrong
