@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 with open('aoc2020-01-input.txt', 'r') as f:
-  lines = f.read().split('\n')[:-1]
+  lines = f.read().strip().split('\n')
 
 def partone():
     for (i,a) in enumerate(lines):

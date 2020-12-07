@@ -26,12 +26,12 @@ def partone(passports):
 def test(p):
     global checks
     global valid
-    if (re.match(r'^byr:(19[2-9][0-9]|200[0-2])$', p) or
-    re.match(r'^iyr:20(1[0-9]|20)$', p) or
-    re.match(r'^eyr:20(2[0-9]|30)$',p) or
-    re.match(r'^hgt:(1([5-8][0-9]|9[0-3])cm|(59|6[0-9]|7[0-6])in)$', p) or
-    re.match(r'^hcl:#[a-f\d]{6}$', p) or
-    re.match(r'^ecl:(amb|blu|brn|gry|grn|hzl|oth)$', p) or
+    if (re.match(r'^byr:(19[2-9][0-9]|200[0-2])$', p) or \
+    re.match(r'^iyr:20(1[0-9]|20)$', p) or \
+    re.match(r'^eyr:20(2[0-9]|30)$',p) or \
+    re.match(r'^hgt:(1([5-8][0-9]|9[0-3])cm|(59|6[0-9]|7[0-6])in)$', p) or \
+    re.match(r'^hcl:#[a-f\d]{6}$', p) or \
+    re.match(r'^ecl:(amb|blu|brn|gry|grn|hzl|oth)$', p) or \
     re.match(r'^pid:\d{9}$', p)):
         valid[checks.index(p[:3])] = True
 
