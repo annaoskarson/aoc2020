@@ -2,48 +2,54 @@
 import copy
 
 with open('aoc2020-08-input.txt', 'r') as f:
-    code = f.read().strip().split('\n')
+    textcode = f.read().strip().split('\n')
 
-#code = ['nop +0', 'acc +1', 'jmp +4', 'acc +3', 'jmp -3', 'acc -99', 'acc +1', 'jmp -4', 'acc +6']
+#textcode = ['nop +0', 'acc +1', 'jmp +4', 'acc +3', 'jmp -3', 'acc -99', 'acc +1', 'jmp -4', 'acc +6']
 
-def runcode(code):
+def makecode(text, code):
+    for line in text:
+        code.append((line.split(' ')[0], int(line.split(' ')[1])))
+    return(code)
+
+def runcode(c):
     i = 0
     been = []
-    finish = False
+    loop = False
     accv = 0
-    while not(finish) and i < len(code):
-        (com, val) = (code[i].split(' ')[0], int(code[i].split(' ')[1]))
-        been.append(i)
+    step = 0
+    while not(loop) and i < len(c):
+        been.append(i) # Save where we've been.
+        (com, val) = c[i]
         if com == 'acc':
             accv += val
-            i += 1
+            step = 1
         elif com == 'jmp':
-            i += val
+            step = val
         elif com == 'nop':
-            i += 1
+            step = 1
 
+        i += step # Next position.
         if i in been:
-            finish = True
-    if not(finish):
-        print('here comes answer to part 2:')
-    return(accv)
+            loop = True
+    return(accv, loop)
 
 def partone():
-    return(runcode(code))
+    (answer, _) = runcode(code)
+    return(answer)
 
 def parttwo():
     testlist = list(enumerate(code))
     for (a, c) in testlist:
         testcode = copy.deepcopy(code)
-        (com, val) = (c.split(' ')[0], int(c.split(' ')[1]))
+        (com, val) = code[a]
         if com in ['jmp', 'nop']:
-            if com == 'jmp':
-                testcode[a] = c.replace('jmp', 'nop')
-            elif com == 'nop':
-                testcode[a] = c.replace('nop', 'jmp')
-            result = runcode(testcode)
-            print(result)
-    #print(testlist)
+            testcode[a] = (list(set(['jmp', 'nop']) - set([com]))[0], val)
+            (result, loop) = runcode(testcode)
+            if not(loop):
+                return(result)
+
+code = []
+code = makecode(textcode, code)
 
 print('Advent of Code 2020, day 8 part 1')
 print(partone())
