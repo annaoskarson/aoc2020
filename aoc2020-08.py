@@ -6,17 +6,16 @@ with open('aoc2020-08-input.txt', 'r') as f:
 
 #textcode = ['nop +0', 'acc +1', 'jmp +4', 'acc +3', 'jmp -3', 'acc -99', 'acc +1', 'jmp -4', 'acc +6']
 
-def makecode(text, code):
+def makecode(text):
+    code = []
     for line in text:
         code.append((line.split(' ')[0], int(line.split(' ')[1])))
     return(code)
 
 def runcode(c):
-    i = 0
+    (i, accv, step) = (0, 0, 0)
     been = []
     loop = False
-    accv = 0
-    step = 0
     while not(loop) and i < len(c):
         been.append(i) # Save where we've been.
         (com, val) = c[i]
@@ -38,18 +37,15 @@ def partone():
     return(answer)
 
 def parttwo():
-    testlist = list(enumerate(code))
+    testlist = [(num, (c, v)) for (num, (c, v)) in list(enumerate(code)) if c in ['jmp', 'nop']]
     for (a, c) in testlist:
         testcode = copy.deepcopy(code)
-        (com, val) = code[a]
-        if com in ['jmp', 'nop']:
-            testcode[a] = (list(set(['jmp', 'nop']) - set([com]))[0], val)
-            (result, loop) = runcode(testcode)
-            if not(loop):
-                return(result)
+        testcode[a] = (list(set(['jmp', 'nop']) - set([c[0]]))[0], c[1]) # Try changing a jmp or nop to the other.
+        (result, loop) = runcode(testcode)
+        if not(loop):
+            return(result)
 
-code = []
-code = makecode(textcode, code)
+code = makecode(textcode)
 
 print('Advent of Code 2020, day 8 part 1')
 print(partone())
