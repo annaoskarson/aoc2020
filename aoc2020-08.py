@@ -37,16 +37,16 @@ def partone():
     return(answer)
 
 def parttwo():
-    testlist = [(num, (c, v)) for (num, (c, v)) in list(enumerate(code)) if c in ['jmp', 'nop']]
-    for (a, c) in testlist:
+    testlist = [num for [num, (c, _)] in list(enumerate(code)) if c in ['jmp', 'nop']]
+    for a in testlist:
         testcode = copy.deepcopy(code)
-        testcode[a] = (list(set(['jmp', 'nop']) - set([c[0]]))[0], c[1]) # Try changing a jmp or nop to the other.
+        (cmd, val) = code[a]
+        testcode[a] = (next(item for item in ['jmp', 'nop'] if item not in cmd), val)
         (result, loop) = runcode(testcode)
         if not(loop):
             return(result)
 
 code = makecode(textcode)
-
 print('Advent of Code 2020, day 8 part 1')
 print(partone())
 print('Advent of Code 2020, day 8 part 2')
