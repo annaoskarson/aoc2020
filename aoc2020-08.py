@@ -15,13 +15,11 @@ def runcode(c):
     while not(loop) and i < len(c):
         been.append(i) # Save where we've been.
         (com, val) = c[i]
+        step = 1 # The default step
         if com == 'acc':
             accv += val
-            step = 1
         elif com == 'jmp':
             step = val
-        elif com == 'nop':
-            step = 1
 
         i += step # Next position.
         if i in been: # If we have already been there.
