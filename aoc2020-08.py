@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import copy
+
 with open('aoc2020-08-input.txt', 'r') as f:
     code = f.read().strip().split('\n')
 
@@ -22,12 +24,28 @@ def runcode(code):
 
         if i in been:
             finish = True
+    if not(finish):
+        print('here comes answer to part 2:')
     return(accv)
 
 def partone():
     return(runcode(code))
 
+def parttwo():
+    testlist = list(enumerate(code))
+    for (a, c) in testlist:
+        testcode = copy.deepcopy(code)
+        (com, val) = (c.split(' ')[0], int(c.split(' ')[1]))
+        if com in ['jmp', 'nop']:
+            if com == 'jmp':
+                testcode[a] = c.replace('jmp', 'nop')
+            elif com == 'nop':
+                testcode[a] = c.replace('nop', 'jmp')
+            result = runcode(testcode)
+            print(result)
+    #print(testlist)
+
 print('Advent of Code 2020, day 8 part 1')
 print(partone())
-#print('Advent of Code 2020, day 8 part 2')
-#print(parttwo())
+print('Advent of Code 2020, day 8 part 2')
+print(parttwo())
