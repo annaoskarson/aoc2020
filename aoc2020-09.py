@@ -14,10 +14,7 @@ def partone():
             pass
         else:
             check = numbers[i-pre:i]
-            try:
-                if next(True for (i, one) in enumerate(check) for two in check[i:] if one+two == n):
-                    pass
-            except StopIteration:
+            if next((False for (i, one) in enumerate(check) for two in check[i:] if one+two == n), True):
                 return(n)
 
 def parttwo():
