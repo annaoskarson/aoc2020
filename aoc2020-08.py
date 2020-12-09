@@ -10,8 +10,7 @@ def makecode(): # Makes code from text file.
 
 def runcode(c):
     (i, accv, step) = (0, 0, 0)
-    been = []
-    loop = False
+    (been, loop) = ([], False)
     while not(loop) and i < len(c):
         been.append(i) # Save where we've been.
         (com, val) = c[i]
@@ -22,7 +21,7 @@ def runcode(c):
             step = val
 
         i += step # Next position.
-        if i in been: # If we have already been there.
+        if i in been: # If we have already been to the next position.
             loop = True
     return(accv, loop)
 
