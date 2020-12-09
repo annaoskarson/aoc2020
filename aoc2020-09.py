@@ -9,20 +9,17 @@ with open('aoc2020-09-input.txt', 'r') as f:
 
 def partone():
     pre = 25
-    for (i, n) in enumerate(numbers):
-        if i < pre:
-            pass
-        else:
-            check = numbers[i-pre:i]
-            if next((False for (i, one) in enumerate(check) for two in check[i:] if one+two == n), True):
-                return(n)
+    for i in range(pre, len(numbers)):
+        n = numbers[i]
+        check = numbers[i-pre:i]
+        if next((False for (i, one) in enumerate(check) for two in check[i:] if one+two == n), True):
+            return(n)
 
 def parttwo():
     n = partone()
     for i in range(len(numbers)):
         for j in range(i+2, len(numbers)):
             if sum(numbers[i:j]) == n:
-                print(numbers[i:j])
                 return(max(numbers[i:j]) + min(numbers[i:j]))
 
 print('Advent of Code 2020, day 8 part 1')
