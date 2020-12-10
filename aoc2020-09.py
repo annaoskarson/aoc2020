@@ -22,7 +22,7 @@ def parttwo():
             if sum(numbers[i:j]) == n:
                 return(max(numbers[i:j]) + min(numbers[i:j]))
 
-print('Advent of Code 2020, day 8 part 1')
+print('Advent of Code 2020, day 9 part 1')
 print(partone())
-print('Advent of Code 2020, day 8 part 2')
+print('Advent of Code 2020, day 9 part 2')
 print(parttwo())
