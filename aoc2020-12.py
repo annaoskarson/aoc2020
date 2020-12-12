@@ -9,7 +9,6 @@ with open('aoc2020-12-input.txt', 'r') as f:
 #navigator = ['F10', 'R90', 'N10', 'L180', 'W20', 'R90', 'F10', 'E10']
 
 def navigate(me, text):
-    #print(me, text)
     (x, y, v) = (me[0], me[1], me[2])
     (com, val) = (text[0], int(text[1:]))
     if com == 'N':
@@ -45,7 +44,40 @@ def partone():
         me = navigate(me, command)
     return(abs(me[0]) + abs(me[1]))
 
+def navigate2(me, wp, text):
+    (x, y) = (me[0], me[1])
+    (wx, wy) = (wp[0], wp[1])
+    (com, val) = (text[0], int(text[1:]))
+    if com == 'N':
+        wy += val
+    elif com == 'S':
+        wy -= val
+    elif com == 'W':
+        wx -= val
+    elif com == 'E':
+        wx += val
+    elif com in ['R', 'L']: #Rotate waypoint around me
+        if (com == 'R' and val == 90) or (com == 'L' and val == 270):
+            (wx, wy) = (wy, -wx)
+        elif (com == 'R' and val == 270) or (com == 'L' and val == 90):
+            (wx, wy) = (-wy, wx)
+        elif val == 180:
+            (wx, wy) = (-wx, -wy)
+    elif com == 'F':
+        x = val * wx + x
+        y = val * wy + y
+    else:
+        print('kommandofel')
+    return([x, y], [wx, wy])
+
+def parttwo():
+    me = [0, 0]
+    wp = [10, 1]
+    for command in navigator:
+        (me, wp) = navigate2(me, wp, command)
+    return(abs(me[0]) + abs(me[1]))
+
 print('Advent of Code 2020, day 12 part 1')
 print(partone())
-#print('Advent of Code 2020, day 12 part 2')
-#print(parttwo())
+print('Advent of Code 2020, day 12 part 2')
+print(parttwo())
