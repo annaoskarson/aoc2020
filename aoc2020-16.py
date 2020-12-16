@@ -2,7 +2,6 @@
 with open('aoc2020-16-input.txt', 'r') as f:
     lines = f.read().strip().split('\n')
 
-#print(lines)
 spec = {}
 for (i,l) in enumerate(lines):
     if l == 'your ticket:':
@@ -33,14 +32,56 @@ def partone():
                 error += num
     return(error)
 
-    #valid_tickets = []
-    #not_valid_tickets = []
-    #for ticket in other:
-        #if all(valid(num) for num in ticket):
-            #valid_tickets.append(ticket)
-    #print(len(valid_tickets), len(other))
+def parttwo():
+    def valid(n):
+        for apa in spec.keys():
+            [a, b] = spec[apa].split('or')
+            [a1, a2] = list(map(int, a.strip().split('-')))
+            [b1, b2] = list(map(int, b.strip().split('-')))
+            if (n >= a1 and n <= a2) or (n >= b1 and n <= b2):
+                return(True)
+        return(False)
+
+    def field(ns):
+        lista = []
+        for apa in spec.keys():
+            [a, b] = spec[apa].split('or')
+            [a1, a2] = list(map(int, a.strip().split('-')))
+            [b1, b2] = list(map(int, b.strip().split('-')))
+            if all((n >= a1 and n <= a2) or (n >= b1 and n <= b2) for n in ns):
+                lista.append(apa)
+        return(lista)
+
+    valid_tickets = []
+    for ticket in other:
+        if all(valid(num) for num in ticket):
+            valid_tickets.append(ticket)
+    i = 0
+    order = []
+    while i < len(valid_tickets[0]):
+        order.append(field([item[i] for item in valid_tickets]))
+        i += 1
+
+    ordered = list(enumerate(order))
+    ordered.sort(key=lambda tup: len(tup[1]))
+
+    bös = []
+    biljett = []
+    for (a, bepa) in ordered:
+        for b in bepa:
+            if b not in bös:
+                bös.append(b)
+                biljett.append((a, b))
+
+    biljett.sort()
+
+    svaret = 1
+    for (i, b) in (biljett):
+        if 'departure' in b:
+            svaret *= my_ticket[i]
+    return(svaret)
 
 print('Advent of Code 2020, day 16 part 1')
 print(partone())
-#print('Advent of Code 2020, day 14 part 2')
-#print(parttwo())
+print('Advent of Code 2020, day 16 part 2')
+print(parttwo())
