@@ -12,8 +12,11 @@ for line in lines:
 
 all_allergenes = set([a for (_,sublist) in foods for a in sublist])
 
+
+translation = {}
+
 def partone():
-    translation = {}
+    global translation
     for alg in all_allergenes:
         check = [c for (c, a) in foods if alg in a]
         elements_in_all = list(set.intersection(*map(set, check)))
@@ -37,7 +40,14 @@ def partone():
         result += len([item for item in f if item not in allers])
     return(result)
 
+def parttwo():
+    result = []
+    for key, value in sorted(translation.items()):
+        result += value
+    return(','.join(result))
+
+
 print('Advent of Code 2020, day 21 part 1')
 print(partone())
-#print('Advent of Code 2020, day 21 part 2')
-#print(parttwo())
+print('Advent of Code 2020, day 21 part 2')
+print(parttwo())
