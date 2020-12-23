@@ -1,11 +1,12 @@
 #!/usr/bin/python3
+import copy
 with open('aoc2020-14-input.txt', 'r') as f:
     lines = f.read().strip().split('\n')
 
-memory = {}
 def partone():
+    memory = {}
+
     def write(a, v, m):
-        global memory
         v = str("{0:b}".format(v))
         new =''
         for i in range(1, len(m)+1):
@@ -19,8 +20,7 @@ def partone():
         memory[a] = new
 
     for l in lines:
-        com = l.split(' ')[0]
-        val = l.split(' ')[2]
+        [com, _, val] = l.split(' ')
         if com == 'mask':
             mask = val
         if com[:3] == 'mem':
@@ -33,7 +33,47 @@ def partone():
         sum += int(memory[addr], base=2)
     return(sum)
 
+def parttwo():
+    memory = {}
+
+    def step(addr, value, mask, mem):
+        addr = '{0:036b}'.format(addr)
+        for i in range(len(mask)):
+            if mask[i] == '1':
+                addr = addr[:i] + '1' + addr[i+1:]
+            elif mask[i] == '0':
+                pass
+
+        addresses = [addr]
+        for i in range(len(mask)):
+            if mask[i] == 'X':
+                newlist = []
+                for a in addresses:
+                    n1 = a[:i] + '1' + a[i+1:]
+                    n0 = a[:i] + '0' + a[i+1:]
+                    newlist.append(n1)
+                    newlist.append(n0)
+                addresses = copy.deepcopy(newlist)
+
+        for ad in addresses:
+            mem[int(ad, base=2)] = value
+        return(mem)
+
+    for l in lines:
+        [com, _, val] = l.split(' ')
+        if com == 'mask':
+            mask = val
+        if com[:3] == 'mem':
+            address = int(com.split('[')[1][:-1])
+            val = int(val)
+            memory = step(address, val, mask, memory)
+
+    sum = 0
+    for addr in memory.keys():
+        sum += memory[addr]
+    return(sum)
+
 print('Advent of Code 2020, day 14 part 1')
 print(partone())
-#print('Advent of Code 2020, day 14 part 2')
-#print(parttwo())
+print('Advent of Code 2020, day 14 part 2')
+print(parttwo())
