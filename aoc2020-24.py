@@ -52,8 +52,14 @@ def dayflip(b, size):
     [(xmin,ymin),(xmax,ymax)] = size
     towhite = set()
     toblack = set()
-    for x in range(xmin, xmax+1):
-        for y in range(ymin, ymax+1):
+    for y in range(ymin, ymax+1):
+        if y % 2 == 0:
+            if xmin % 2 != 0:
+                xmin -= 1
+        else:
+            if xmin % 2 == 0:
+                xmin -= 1
+        for x in range(xmin, xmax+1, 2):
             adj = adjacent(x,y)
             baround = len([tile for tile in adj if tile in b])
             if (x,y) not in b and baround == 2:
