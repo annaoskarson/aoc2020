@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-import re
 with open('aoc2020-24-input.txt', 'r') as f:
     instructions = f.read().strip().split('\n')
 
@@ -9,30 +8,29 @@ def move(start, instr):
     x,y = start
     i = 0
     while i < len(instr):
-        if re.match(r'^e', instr[i:]):
+        if instr[i:].startswith('e'):
             x +=2
-            i +=1
-        elif re.match(r'^w', instr[i:]):
+        elif instr[i:].startswith('w'):
             x -=2
+        elif instr[i:].startswith('se'):
+            y -=1
+            x +=1
             i +=1
-        elif re.match(r'^se', instr[i:]):
-            y -=1
-            x +=1
-            i +=2
-        elif re.match(r'^sw', instr[i:]):
+        elif instr[i:].startswith('sw'):
             y -=1
             x -=1
-            i +=2
-        elif re.match(r'^ne', instr[i:]):
+            i +=1
+        elif instr[i:].startswith('ne'):
             y +=1
             x +=1
-            i +=2
-        elif re.match(r'^nw', instr[i:]):
+            i +=1
+        elif instr[i:].startswith('nw'):
             y +=1
             x -=1
-            i +=2
+            i +=1
         else:
             print('wrong code')
+        i += 1
     return(x,y)
 
 def partone():
