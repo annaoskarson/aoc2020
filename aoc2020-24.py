@@ -52,23 +52,15 @@ def dayflip(b, size):
     [(xmin,ymin),(xmax,ymax)] = size
     towhite = set()
     toblack = set()
-    #towhite = []
-    #toblack = []
     for x in range(xmin, xmax+1):
         for y in range(ymin, ymax+1):
             adj = adjacent(x,y)
             baround = len([tile for tile in adj if tile in b])
             if (x,y) not in b and baround == 2:
                 toblack.add((x,y))
-                #toblack.append((x,y))
             elif (x,y) in b and (baround == 0 or baround > 2):
                 towhite.add((x,y))
-                #towhite.append((x,y))
     b = b.union(toblack) - towhite
-    #for tile in towhite:
-        #b.remove(tile)
-    #for tile in toblack:
-        #b.add(tile)
     return(b)
 
 def size(flipped):
