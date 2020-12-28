@@ -30,14 +30,23 @@ def pattern(num):
         return('(' + pattern('42') + ')+' )
     elif num == '11' and part == 2: #(apa)(?R)?(bepa
         #rules['11'] = [['42', '31'], ['42', '11', '31']]
+        #return('(' + pattern('42') + '(?-1)?' + pattern('31') +')' )
         #return('((' + pattern('42') + ')(?R)?(' + pattern('31') +'))' )
         # Fick aldrig ordning på det, oklart.
+        #return('(' + pattern('42') + pattern('31') + '|' + \
+        #pattern('42') + pattern('42') + pattern('31') + pattern('31') + '|' + \
+        #pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + '|' + \
+        #pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + '|' + \
+        #pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + '|' +
+        #pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + ')' )
+
         return('(' + pattern('42') + pattern('31') + '|' + \
-        pattern('42') + pattern('42') + pattern('31') + pattern('31') + '|' + \
-        pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + '|' + \
-        pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + '|' + \
-        pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + '|' +
-        pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('42') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + pattern('31') + ')' )
+        '(' + pattern('42') +'){2}(' + pattern('31') + '){2}' + '|' + \
+        '(' + pattern('42') +'){3}(' + pattern('31') + '){3}' + '|' + \
+        '(' + pattern('42') +'){4}(' + pattern('31') + '){4}' + '|' + \
+        '(' + pattern('42') +'){5}(' + pattern('31') + '){5}' + '|' + \
+        '(' + pattern('42') +'){6}(' + pattern('31') + '){6}' + ')' )
+
 
     if len(ll) == 1:
         l = ll[0]
